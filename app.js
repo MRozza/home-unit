@@ -17,7 +17,7 @@ con.connect(function(err) {
   console.log('Connected!');
   con.query('CREATE DATABASE IF NOT EXISTS ci', function(err, result) {
     if (err) throw err;
-    console.log('Database created');
+    console.log('Database created!');
     con.query('use ci;');
     con.query(
       `CREATE TABLE IF NOT EXISTS users (
