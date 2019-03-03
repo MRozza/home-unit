@@ -13,3 +13,7 @@ before_install:
   - sudo service mysql restart
 script:
   - echo "This project has no tests, just deploying then..."
+notifications:
+  email:
+    - moro52@ess.ais.ac.nz
+    - mohamed.a.rozza@gmail.com
