@@ -1,0 +1,111 @@
+<!--
+  This is the login page.
+  visitors can login using this page, if they don't have an account they can navigate to Register page using the link provided.
+  if user login, a session will be created and the user will be redirected to home page
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CI</title>
+    <link
+      rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"
+    />
+    <style>
+      .panel-info > .panel-heading {
+        color: whitesmoke;
+        background-color: grey;
+        border-color: grey !important;
+      }
+      .panel-info {
+        border-color: grey;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div
+        id="loginbox"
+        style="margin-top:3.5em;"
+        class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2"
+      >
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="panel-title">Login</div>
+            <!--<div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>-->
+          </div>
+
+          <div style="padding-top:30px" class="panel-body">
+            <% if (message && message.length > 0) { %>
+            <div class="alert alert-danger col-sm-12"><%= message %></div>
+            <% } %>
+
+            <form
+              class="form-horizontal"
+              role="form"
+              method="post"
+              action="/login"
+            >
+              <div class="form-group">
+                <label for="user_name" class="col-md-3 control-label"
+                  >User Name</label
+                >
+                <div style="margin-bottom: 25px" class="col-md-9 input-group">
+                  <span class="input-group-addon"
+                    ><i class="glyphicon glyphicon-user"></i
+                  ></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="user_name"
+                    value=""
+                    placeholder="Enter Your Username Here..."
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="user_name" class="col-md-3 control-label"
+                  >User Name</label
+                >
+                <div style="margin-bottom: 25px" class="col-md-9 input-group">
+                  <span class="input-group-addon"
+                    ><i class="glyphicon glyphicon-lock"></i
+                  ></span>
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    placeholder="Enter Your Password Here..."
+                  />
+                </div>
+              </div>
+              <div style="margin-top:10px" class="form-group">
+                <div class="col-sm-12 controls">
+                  <button type="submit" class="btn btn-primary">
+                    Login
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-12 control">
+                  <div
+                    style="border-top: 1px solid#888; padding-top:15px; font-size:85%"
+                  >
+                    Don't have an account yet?
+                    <a href="/register">
+                      Register!
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      &copy; Mohamed Roza
+    </div>
+  </body>
+</html>

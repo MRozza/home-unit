@@ -1,6 +1,8 @@
 var express = require('express'),
   routes = require('./routes');
 var app = express();
+var user = require('./routes/user');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
 const url = require('url');
@@ -11,10 +13,11 @@ var con = mysql.createConnection({
   user: 'root',
   password: ''
 });
-
+// connect to mysql server
 con.connect(function(err) {
   if (err) throw err;
   console.log('Connected!');
+  // create database
   con.query('CREATE DATABASE IF NOT EXISTS ci', function(err, result) {
     if (err) throw err;
     console.log('Database created!');
@@ -34,17 +37,29 @@ con.connect(function(err) {
     );
   });
 });
-
+// declare global variables
 global.db = con;
 global.url = url;
 
 // all environments
-app.set('port', 8093);
+app.set('port', 8081);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// edit session settings
+app.use(
+  session({
+    secret: 'ais ci cookie dude!',
+    saveUninitialized: true,
+    cookie: { maxAge: 90000 },
+    resave: false
+  })
+);
 app.get('/', routes.index); //call for main index page
 app.get('/home', routes.index); //call for main index page
 app.post('/home', routes.index); //call for main index page
-app.listen(8093);
+app.get('/register', user.register); //call for register page
+app.post('/login', user.login); //call for login post
+app.get('/login', user.login); //call for login get
+app.listen(8081);

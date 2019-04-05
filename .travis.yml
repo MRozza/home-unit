@@ -11,9 +11,12 @@ services:
 before_install:
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
   - sudo service mysql restart
+  - npm install
   script:
-  - echo "This project has no tests, just deploying then..."
+  - echo "Home unit has been built successfully..."
 notifications:
   email:
     - moro52@ess.ais.ac.nz
     - mohamed.a.rozza@gmail.com
+after_install:
+  - node app.js
