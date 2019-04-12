@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "opn http://localhost:8081 && node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +19,7 @@
     "express": "^4.14.1",
     "express-session": "^1.15.1",
     "mysql": "^2.13.0",
-    "req-flash": "0.0.3",
-    "opn-cli": "^4.0.0"
+    "req-flash": "0.0.3"
   },
   "bugs": {
     "url": "https://github.com/MRozza/home-unit/issues"
