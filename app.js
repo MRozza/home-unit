@@ -60,6 +60,7 @@ app.get('/', routes.index); //call for main index page
 app.get('/home', routes.index); //call for main index page
 app.post('/home', routes.index); //call for main index page
 app.get('/register', user.register); //call for register page
+app.post('/register', user.register); //call for register page
 app.post('/login', user.login); //call for login post
 app.get('/login', user.login); //call for login get
 app.listen(8081);
