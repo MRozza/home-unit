@@ -45,37 +45,22 @@ exports.register = function(req, res) {
     console.log(userName);
     console.log(password);
     var sql =
-      "INSERT INTO users(name,user_name, password) VALUES ('" +
-      name +
-      "','" +
-      userName +
-      "','" +
-      password +
-      "')";
-    // execute sql query
-    db.query(sql, function(err, result) {
+      "INSERT INTO users(name,user_name, password) VALUES($1, $2, $3)      returning *";
+    const values = [
+      name,
+      userName,
+      password
+    ];
+    try {
+      const { rows } = await db.query(sql, values);
+      console.log(JSON.stringify(log));
+      
       message = 'Succesfully! Your account has been created.';
-
-      sql =
-        "SELECT id, name, user_name FROM users WHERE user_name='" +
-        userName +
-        "' and password = '" +
-        password +
-        "'";
-      // execute sql query
-      db.query(sql, function(err, results) {
-        if (err) console.log(err);
-
-        console.log(results);
-
-        if (results && results.length) {
-          res.redirect('/login');
-        } else {
-          message = 'Enter valid data!';
+      res.redirect('/login');
+    } catch(error) {
+      message = 'Enter valid data!';
           res.render('signup.ejs', { message: message });
-        }
-      });
-    });
+    }
   } else {
     res.render('signup');
   }
