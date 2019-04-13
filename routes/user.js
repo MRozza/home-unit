@@ -61,7 +61,7 @@ exports.register = function(req, res) {
         userName +
         "' and password = '" +
         password +
-        "' LIMIT 1";
+        "'";
       // execute sql query
       db.query(sql, function(err, results) {
         if (err) console.log(err);

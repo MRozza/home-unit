@@ -4,41 +4,49 @@ var app = express();
 var user = require('./routes/user');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var mysql = require('mysql');
+const { Pool } = require('pg');
+const dotenv = require('dotenv');
 const url = require('url');
+dotenv.config();
 
-var con = mysql.createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: ''
+const pool = new Pool({
+  connectionString:
+    'postgres://rhvdxhazqobubd:b48ee7ef642af26d2cfab2ea919c39cfc1820318c19555fc708f57cb9a1d0f82@ec2-54-225-242-183.compute-1.amazonaws.com:5432/d3reo846hopkg'
 });
-// connect to mysql server
-con.connect(function(err) {
-  if (err) throw err;
-  console.log('Connected!');
-  // create database
-  con.query('CREATE DATABASE IF NOT EXISTS ci', function(err, result) {
-    if (err) throw err;
-    console.log('Database created!');
-    con.query('use ci;');
-    con.query(
-      `CREATE TABLE IF NOT EXISTS users (
-        id int NOT NULL AUTO_INCREMENT,
-        name varchar(50) NOT NULL,
-        user_name varchar(30) NOT NULL,
-        password varchar(32) NOT NULL,
-        PRIMARY KEY (id)
-        )`,
-      function(err, result) {
-        if (err) throw err;
-        console.log('Table created');
-      }
-    );
-  });
+
+pool.on('connect', () => {
+  console.log('connected to the db');
 });
+const createTables = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS users (
+      id int NOT NULL AUTO_INCREMENT,
+      name varchar(50) NOT NULL,
+      user_name varchar(30) NOT NULL,
+      password varchar(32) NOT NULL,
+      PRIMARY KEY (id)
+      )`;
+
+  pool
+    .query(queryText)
+    .then(res => {
+      console.log(res);
+      pool.end();
+    })
+    .catch(err => {
+      console.log(err);
+      pool.end();
+    });
+};
+pool.on('remove', () => {
+  console.log('client removed');
+  process.exit(0);
+});
+
+module.exports = {
+  createTables
+};
 // declare global variables
-global.db = con;
+global.db = pool;
 global.url = url;
 
 // all environments
