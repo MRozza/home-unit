@@ -45,21 +45,17 @@ exports.register = function(req, res) {
     console.log(userName);
     console.log(password);
     var sql =
-      "INSERT INTO users(name,user_name, password) VALUES($1, $2, $3)      returning *";
-    const values = [
-      name,
-      userName,
-      password
-    ];
+      'INSERT INTO users(name,user_name, password) VALUES($1, $2, $3)      returning *';
+    const values = [name, userName, password];
     try {
-      const { rows } = await db.query(sql, values);
-      console.log(JSON.stringify(log));
-      
+      const rows = db.query(sql, values);
+      console.log(JSON.stringify(rows));
+
       message = 'Succesfully! Your account has been created.';
       res.redirect('/login');
-    } catch(error) {
+    } catch (error) {
       message = 'Enter valid data!';
-          res.render('signup.ejs', { message: message });
+      res.render('signup.ejs', { message: message });
     }
   } else {
     res.render('signup');
