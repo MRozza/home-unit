@@ -11,7 +11,7 @@ exports.login = function(req, res) {
     var password = post.password;
 
     var sql =
-      'SELECT id, name, user_name FROM users WHERE user_name=$1 and password = $2';
+      "SELECT id, name, user_name FROM users WHERE user_name='$1' and password = '$2'";
     try {
       const results = db.query(sql, [userName, password]);
       console.log(JSON.stringify(results));
