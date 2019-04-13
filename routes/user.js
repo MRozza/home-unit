@@ -11,24 +11,21 @@ exports.login = function(req, res) {
     var password = post.password;
 
     var sql =
-      "SELECT id, name, user_name FROM users WHERE user_name='" +
-      userName +
-      "' and password = '" +
-      password +
-      "'";
-    // execute sql query
-    db.query(sql, function(err, results) {
+      'SELECT id, name, user_name FROM users WHERE user_name=$1 and password = $2';
+    try {
+      const results = db.query(sql, [userName, password]);
+      console.log(JSON.stringify(results));
       if (results && results.length) {
         // create session for user
         req.session.user = results[0];
         console.log('id: ' + results[0].id);
         console.log('Logged in successfully!');
         res.redirect('/home');
-      } else {
-        message = 'Invalid Username or Password!';
-        res.render('signin.ejs', { message: message });
       }
-    });
+    } catch (error) {
+      message = 'Invalid Username or Password!';
+      res.render('signin.ejs', { message: message });
+    }
   } else {
     message = 'Invalid Username or Password!';
     res.render('signin.ejs', { message: message });
