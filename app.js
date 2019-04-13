@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 const url = require('url');
+const PORT = process.env.PORT || 5000;
 dotenv.config();
 
 const pool = new Pool({
@@ -19,11 +20,10 @@ pool.on('connect', () => {
 });
 const createTables = () => {
   const queryText = `CREATE TABLE IF NOT EXISTS users (
-      id int NOT NULL AUTO_INCREMENT,
-      name varchar(50) NOT NULL,
-      user_name varchar(30) NOT NULL,
-      password varchar(32) NOT NULL,
-      PRIMARY KEY (id)
+    user_id serial PRIMARY KEY,
+    user_name VARCHAR (50) UNIQUE NOT NULL,
+    password VARCHAR (50) NOT NULL,
+      name VARCHAR (50) NOT NULL
       )`;
 
   pool
@@ -50,7 +50,6 @@ global.db = pool;
 global.url = url;
 
 // all environments
-app.set('port', 8081);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -71,4 +70,4 @@ app.get('/register', user.register); //call for register page
 app.post('/register', user.register); //call for register page
 app.post('/login', user.login); //call for login post
 app.get('/login', user.login); //call for login get
-app.listen(8081);
+app.listen(PORT);
