@@ -11,7 +11,7 @@ exports.login = function(req, res) {
     var password = post.password;
 
     var sql =
-      "SELECT id, name, user_name FROM `users` WHERE `user_name`='" +
+      "SELECT id, name, user_name FROM users WHERE user_name='" +
       userName +
       "' and password = '" +
       password +
@@ -45,7 +45,7 @@ exports.register = function(req, res) {
     console.log(userName);
     console.log(password);
     var sql =
-      "INSERT INTO `users`(`name`,`user_name`, `password`) VALUES ('" +
+      "INSERT INTO users(name,user_name, password) VALUES ('" +
       name +
       "','" +
       userName +
@@ -57,7 +57,7 @@ exports.register = function(req, res) {
       message = 'Succesfully! Your account has been created.';
 
       sql =
-        "SELECT id, name, user_name FROM `users` WHERE `user_name`='" +
+        "SELECT id, name, user_name FROM users WHERE user_name='" +
         userName +
         "' and password = '" +
         password +
